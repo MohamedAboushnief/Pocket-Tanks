@@ -764,6 +764,7 @@ void Anim() {
 			p1_range = 600;
 			t1 = 0;
 			defender_hit = true;
+			glutTimerFunc(6000, time3, 0);
 		}
 
 
@@ -823,6 +824,7 @@ void Anim() {
 			p1_range = 600;
 			t2 = 0;
 			defender_hit = true;
+			glutTimerFunc(6000, time3, 0);
 		}
 
 		if (projY2 + 68 >= 0 && projY2 + 68 <= 300 && projX2 + 1190 == (glutGet(GLUT_WINDOW_WIDTH) / 2) + 10) {   //if projectile 2 touches wall
@@ -928,7 +930,6 @@ void Anim() {
 
 
 	alternator++;
-	glutTimerFunc(6000, time3, 0);
 	glutPostRedisplay();
 
 
@@ -948,6 +949,8 @@ void main(int argc, char** argr) {
 	glutDisplayFunc(Display);
 	glutTimerFunc(0, time, 0);
 	glutTimerFunc(0, time2, 0);
+	glutTimerFunc(0, time3, 0);
+
 	glutKeyboardFunc(key);
 	glutKeyboardUpFunc(keyUp);
 	glutIdleFunc(Anim);
