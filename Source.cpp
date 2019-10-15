@@ -20,6 +20,8 @@ double backgroundR = 0.5;
 double backgroundG = 0.8;
 double backgroundB = 0.9;
 
+bool defender_hit = false;
+
 double s1 = 0.98;
 double s2 = 0.83;
 double s3 = 0.25;
@@ -111,6 +113,7 @@ void keyUp(unsigned char k, int x, int y)//keyboard up function is called whenev
 										 //for throwing 
 {
 	if (k == 'm' && player1turn == true) {       // for player 1
+		PlaySound("Explosion.wav", NULL, SND_ASYNC | SND_FILENAME);
 		throw1 = true;
 		powerbar1 = false;
 		power1 = 20;
@@ -119,6 +122,7 @@ void keyUp(unsigned char k, int x, int y)//keyboard up function is called whenev
 		powerbarMax1 = 0;
 	}
 	if (k == 'c' && player2turn == true) {		  // for player 2
+		PlaySound("Explosion.wav", NULL, SND_ASYNC | SND_FILENAME);
 		throw2 = true;
 		powerbar2 = false;
 		power2 = 20;
@@ -188,7 +192,7 @@ void Display() {
 	glVertex3d((glutGet(GLUT_WINDOW_WIDTH) / 2) + 10, 295, 0);
 	glVertex3d(glutGet(GLUT_WINDOW_WIDTH) / 2 - 50, 295, 0);
 	glEnd();
-
+	
 
 	glBegin(GL_QUADS);										// flag  white
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -520,62 +524,62 @@ void Display() {
 	glPopMatrix();
 
 
+	if (defender_hit == false) {
+		// Helicopter
+		glPushMatrix();
+		glColor3f(0.09f, 0.52f, 0.17f);
+		glTranslatef(heli_moveX, 50, 0);
+		glBegin(GL_TRIANGLES);
+		glVertex3f(100, 300, 0);
+		glVertex3f(130, 330, 0);
+		glVertex3f(160, 300, 0);
+		glEnd();
+		glBegin(GL_QUADS);
+		glVertex3f(70, 310, 0);
+		glVertex3f(110, 310, 0);
+		glVertex3f(110, 300, 0);
+		glVertex3f(70, 300, 0);
+		glEnd();
+		glBegin(GL_QUADS);
+		glVertex3f(60, 300, 0);
+		glVertex3f(70, 300, 0);
+		glVertex3f(70, 320, 0);
+		glVertex3f(60, 320, 0);
+		glEnd();
+		glBegin(GL_LINES);
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(90, 330, 0);
+		glVertex3f(170, 330, 0);
+		glEnd();
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glBegin(GL_LINES);
+		int number11 = 20;
+		float radius11 = 15.0f;
+		float twoPi11 = 2.0f * 3.14159f;
+		for (int i = 0; i < number11; i++)
+			glVertex3f(radius11 * cosf(i * twoPi11 / number11) + 65,
+				radius11 * sinf(i * twoPi11 / number11) + 320, 0.0f);
+		glEnd();
+		glBegin(GL_TRIANGLES);
+		glVertex3f(138, 320, 0);
+		glVertex3f(155, 305, 0);
+		glVertex3f(130, 305, 0);
+		glEnd();
 
-	// Helicopter
-	glPushMatrix();
-	glColor3f(0.09f, 0.52f, 0.17f);
-	glTranslatef(heli_moveX, 50, 0);
-	glBegin(GL_TRIANGLES);
-	glVertex3f(100, 300, 0);
-	glVertex3f(130, 330, 0);
-	glVertex3f(160, 300, 0);
-	glEnd();
-	glBegin(GL_QUADS);
-	glVertex3f(70, 310, 0);
-	glVertex3f(110, 310, 0);
-	glVertex3f(110, 300, 0);
-	glVertex3f(70, 300, 0);
-	glEnd();
-	glBegin(GL_QUADS);
-	glVertex3f(60, 300, 0);
-	glVertex3f(70, 300, 0);
-	glVertex3f(70, 320, 0);
-	glVertex3f(60, 320, 0);
-	glEnd();
-	glBegin(GL_LINES);
-	glColor3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(90, 330, 0);
-	glVertex3f(170, 330, 0);
-	glEnd();
-	glColor3f(0.0f, 0.0f, 0.0f);
-	glBegin(GL_LINES);
-	int number11 = 20;
-	float radius11 = 15.0f;
-	float twoPi11 = 2.0f * 3.14159f;
-	for (int i = 0; i < number11; i++)
-		glVertex3f(radius11 * cosf(i * twoPi11 / number11) + 65,
-			radius11 * sinf(i * twoPi11 / number11) + 320, 0.0f);
-	glEnd();
-	glBegin(GL_TRIANGLES);
-	glVertex3f(138, 320, 0);
-	glVertex3f(155, 305, 0);
-	glVertex3f(130, 305, 0);
-	glEnd();
-
-	glBegin(GL_LINES);
-	glVertex3f(150, 300, 0);
-	glVertex3f(150, 295, 0);
-	glEnd();
-	glBegin(GL_LINES);
-	glVertex3f(120, 300, 0);
-	glVertex3f(120, 295, 0);
-	glEnd();
-	glBegin(GL_LINES);
-	glVertex3f(100, 295, 0);
-	glVertex3f(160, 295, 0);
-	glEnd();
-	glPopMatrix();
-
+		glBegin(GL_LINES);
+		glVertex3f(150, 300, 0);
+		glVertex3f(150, 295, 0);
+		glEnd();
+		glBegin(GL_LINES);
+		glVertex3f(120, 300, 0);
+		glVertex3f(120, 295, 0);
+		glEnd();
+		glBegin(GL_LINES);
+		glVertex3f(100, 295, 0);
+		glVertex3f(160, 295, 0);
+		glEnd();
+		glPopMatrix();
+	}
 
 
 
@@ -678,6 +682,9 @@ void time2(int val)
 
 }
 
+void time3(int val) {
+	defender_hit = false;
+}
 
 
 void Anim() {
@@ -756,6 +763,7 @@ void Anim() {
 			throw1 = false;
 			p1_range = 600;
 			t1 = 0;
+			defender_hit = true;
 		}
 
 
@@ -814,6 +822,7 @@ void Anim() {
 			throw2 = false;
 			p1_range = 600;
 			t2 = 0;
+			defender_hit = true;
 		}
 
 		if (projY2 + 68 >= 0 && projY2 + 68 <= 300 && projX2 + 1190 == (glutGet(GLUT_WINDOW_WIDTH) / 2) + 10) {   //if projectile 2 touches wall
@@ -919,7 +928,7 @@ void Anim() {
 
 
 	alternator++;
-
+	glutTimerFunc(6000, time3, 0);
 	glutPostRedisplay();
 
 
